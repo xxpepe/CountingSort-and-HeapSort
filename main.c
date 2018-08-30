@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 #define NUM_ELEMENTOS 5
-//#define TAM_HEAP 5
+#define TAM_ARRAY 6
 
-int TAM_HEAP = 6;
+//int TAM_HEAP = 6;
 
 void swap(int *x, int *y){ 
    int aux;
@@ -36,6 +36,10 @@ void CountingSort(int *A, int *B, int k, int n){ // k = maior valor do array
 
 } 
 
+int Pai(int i){
+    int a = (i-1)/2;
+    return a;
+}
 int FilhoEsquerdo(int i){
     int a = (2*i)+1;
 
@@ -48,12 +52,12 @@ int FilhoDireito(int i){
     return a;
 }
 
-void MaxHeapfy(int *A, int i){
-    int esquerdo = FilhoEsquerdo(esquerdo); 
-    int direito = FilhoDireito(direito);
+void MaxHeapfy(int tamanho, int *A, int i){
+    int esquerdo = FilhoEsquerdo(i); 
+    int direito = FilhoDireito(i);
     int maior = i; //maior indice
     
-    //int TAM_HEAP = sizeof(A);
+    int TAM_HEAP = tamanho - Pai(i) - 1;
 
     if(esquerdo<=TAM_HEAP && A[esquerdo]>A[maior]){
         maior = esquerdo;
@@ -65,28 +69,27 @@ void MaxHeapfy(int *A, int i){
 
     if(maior!=i){
         swap(&A[i],&A[maior]);
-        MaxHeapfy(A,maior);
+        MaxHeapfy(TAM_HEAP, A,maior);
     }
 }
 
 void BuildMaxHeap(int *A){
-    int i = 0;
-    //int TAM_HEAP = sizeof(A);
+    int i = 0;    
+    int tamanho = 6;
 
-    for (i = (TAM_HEAP/2) - 1; i >=0; i--){
-        MaxHeapfy(A,i);
+    for (i = (TAM_ARRAY/2) - 1; i >=0; i--){
+        MaxHeapfy(tamanho, A,i);
     }
 }
 
 void HeapSort(int *A){
+    
     BuildMaxHeap(A);
     int i = 0;
-    //static int TAM_HEAP = sizeof(A);
-    printf("%d", TAM_HEAP);
-    for (i = TAM_HEAP - 1; i>=0 ; i--){
+    //printf("%d", TAM_HEAP);
+for (i = TAM_ARRAY - 1; i>=0 ; i--){
         swap(&A[0], &A[i]);
-        TAM_HEAP = TAM_HEAP -1;
-        MaxHeapfy(A,0);
+        MaxHeapfy(i, A,0);
     }
 
 }
@@ -131,7 +134,7 @@ int main(){
     //int array3[NUM_ELEMENTOS] = {21,2,34,17,33}; 
     //int array3[NUM_ELEMENTOS] = {1, 15, 2, 1, 89}; 
     //int array3[NUM_ELEMENTOS] = {50,40,30,20,10};
-    int array3[NUM_ELEMENTOS + 1] = {1, 15, 2, 47, 89, 25}; 
+    int array3[TAM_ARRAY] = {1,15,2,47,89,25}; 
 
     printf("\nArray 2 antes da troca:\n");
     Imprime2(array3);
