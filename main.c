@@ -4,7 +4,7 @@
 #define NUM_ELEMENTOS 5
 //#define TAM_HEAP 5
 
-int TAM_HEAP = 5; 
+int TAM_HEAP = 6;
 
 void swap(int *x, int *y){ 
    int aux;
@@ -36,12 +36,24 @@ void CountingSort(int *A, int *B, int k, int n){ // k = maior valor do array
 
 } 
 
+int FilhoEsquerdo(int i){
+    int a = (2*i)+1;
+
+    return a;
+}
+
+int FilhoDireito(int i){
+    int a = (2*i)+2;
+
+    return a;
+}
+
 void MaxHeapfy(int *A, int i){
-    int esquerdo = (2*i)+1; 
-    int direito = (2*i)+2;
-    int maior = i;
+    int esquerdo = FilhoEsquerdo(esquerdo); 
+    int direito = FilhoDireito(direito);
+    int maior = i; //maior indice
     
-    //TAM_HEAP = sizeof(A);
+    //int TAM_HEAP = sizeof(A);
 
     if(esquerdo<=TAM_HEAP && A[esquerdo]>A[maior]){
         maior = esquerdo;
@@ -59,7 +71,8 @@ void MaxHeapfy(int *A, int i){
 
 void BuildMaxHeap(int *A){
     int i = 0;
-    //TAM_HEAP = sizeof(A);
+    //int TAM_HEAP = sizeof(A);
+
     for (i = (TAM_HEAP/2) - 1; i >=0; i--){
         MaxHeapfy(A,i);
     }
@@ -68,6 +81,8 @@ void BuildMaxHeap(int *A){
 void HeapSort(int *A){
     BuildMaxHeap(A);
     int i = 0;
+    //static int TAM_HEAP = sizeof(A);
+    printf("%d", TAM_HEAP);
     for (i = TAM_HEAP - 1; i>=0 ; i--){
         swap(&A[0], &A[i]);
         TAM_HEAP = TAM_HEAP -1;
